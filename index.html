@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Ivet Flow · Plan & Hábitos</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Google Fonts: Plus Jakarta Sans / Quicksand for a soft, aesthetic look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['Quicksand', 'sans-serif'],
+          },
+          colors: {
+            pastel: {
+              beige: '#FBF8F3',       // Base cálida crema / beige suave
+              beigeDark: '#F2ECE1',   // Beige tostado para bordes/fondos
+              beigeCard: '#FFFFFF',   // Blanco puro suave para tarjetas limpias
+              pink: '#FDE2E4',        // Rosa pastel suave
+              pinkDeep: '#F2A6B2',    // Rosa pastel acento / botones
+              pinkText: '#9E4758',    // Rosa texto legible
+              turquoise: '#D8F3DC',   // Menta / Turquesa pastel suave
+              turquoiseDeep: '#52B788',// Turquesa acento fresco
+              turquoiseText: '#1E6345',// Turquesa texto contraste
+              lavender: '#E8E8E4',
+              slateSoft: '#4A5568'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Mobile app container feel */
+    body {
+      background-color: #F8F5EE;
+      color: #384252;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    /* Soft pastel card shadows */
+    .soft-card {
+      background: #FFFFFF;
+      border: 1.5px solid #EFE8DA;
+      box-shadow: 0 4px 18px -2px rgba(180, 160, 140, 0.08);
+      border-radius: 22px;
+    }
+
+    .soft-pill {
+      box-shadow: 0 2px 8px rgba(160, 140, 120, 0.06);
+    }
+
+    /* Custom Pastel Checkboxes */
+    .custom-check-meal:checked {
+      background-color: #52B788;
+      border-color: #52B788;
+      box-shadow: 0 0 10px rgba(82, 183, 136, 0.4);
+    }
+
+    .custom-check-heart:checked {
+      background-color: #E27B8D;
+      border-color: #E27B8D;
+      box-shadow: 0 0 10px rgba(226, 123, 141, 0.45);
+    }
+
+    /* Smooth transitions */
+    .tab-active {
+      background-color: #FDE2E4 !important;
+      color: #9E4758 !important;
+      font-weight: 700 !important;
+    }
+
+    /* Hide scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-24 max-w-md mx-auto relative antialiased border-x border-[#EFE8DA] shadow-2xl">
+
+  <!-- ==================== HEADER MOVIL (COMPACTO & COQUETO) ==================== -->
+  <header class="sticky top-0 z-50 bg-[#F8F5EE]/95 backdrop-blur-md px-5 pt-3 pb-2 border-b border-[#EFE8DA]">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-[#FDE2E4] to-[#D8F3DC] flex items-center justify-center shadow-sm border border-white">
+          <span class="text-sm">🌸</span>
+        </div>
+        <div>
+          <h1 class="text-sm font-extrabold tracking-tight text-slate-800 font-display">
+            Ivet Izquierdo Blanch
+          </h1>
+          <p class="text-[10px] font-semibold text-slate-400 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#52B788] animate-pulse"></span> Castelldefels ↔ Sant Cugat
+          </p>
+        </div>
+      </div>
+
+      <!-- Selector de fecha rápida -->
+      <div class="bg-white rounded-xl border border-[#EFE8DA] px-2.5 py-1 flex items-center gap-1.5 shadow-sm">
+        <i data-lucide="calendar" class="w-3.5 h-3.5 text-[#52B788]"></i>
+        <input type="date" id="calendarDatePicker" onchange="changeSelectedDate(this.value)" 
+               class="bg-transparent text-[11px] font-bold text-slate-700 focus:outline-none cursor-pointer">
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT AREA ==================== -->
+  <main class="px-4 pt-3 flex-1 space-y-3.5">
+
+    <!-- FRASE MOTIVADORA SEMANAL (ESTILO PASTEL COQUETO) -->
+    <div class="rounded-3xl p-3.5 bg-gradient-to-r from-[#FFF0F2] via-[#FBF7F0] to-[#EBF8EE] border border-[#F4E2D4] relative overflow-hidden shadow-sm">
+      <div class="flex items-start gap-2.5">
+        <span class="text-base mt-0.5">✨</span>
+        <div class="flex-1">
+          <div class="flex items-center justify-between gap-1 mb-0.5">
+            <span class="text-[9px] font-extrabold tracking-wider uppercase text-[#9E4758]" id="weeklyBadge">
+              MOTIVACIÓN SEMANA ACTIVA
+            </span>
+            <span class="text-[10px] font-semibold text-slate-400" id="currentDateFormatted"></span>
+          </div>
+          <p class="text-xs font-bold text-slate-800 leading-snug font-display" id="weeklyMotivationalQuote">
+            Cargando mensaje para Ivet...
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 1. VISTA: COMIDAS (ESTRELLAS ⭐) ==================== -->
+    <section id="view-comidas" class="space-y-3">
+      
+      <!-- Suplementos Card (Pastel Rosa & Turquesa) -->
+      <div class="soft-card p-3.5 bg-white flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-[#EAF8EE] text-[#52B788] flex items-center justify-center font-bold text-xs">
+            ⚡
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-800">Booster Diario</h4>
+            <p class="text-[10px] text-slate-400">Creatina (07h) & Proteína (17:30h)</p>
+          </div>
+        </div>
+
+        <div class="flex gap-1.5">
+          <label class="flex items-center gap-1.5 bg-[#F9F6F0] px-2.5 py-1.5 rounded-xl border border-[#EFE8DA] text-[11px] font-semibold text-slate-700 cursor-pointer">
+            <input type="checkbox" id="check-creatina" onchange="toggleCreatine()" class="custom-check-meal rounded-md w-3.5 h-3.5 accent-[#52B788]">
+            <span>5g Creatina</span>
+          </label>
+          <label class="flex items-center gap-1.5 bg-[#FDF0F2] px-2.5 py-1.5 rounded-xl border border-[#FAD8DE] text-[11px] font-semibold text-[#9E4758] cursor-pointer">
+            <input type="checkbox" id="check-proteina" onchange="toggleProtein()" class="custom-check-meal rounded-md w-3.5 h-3.5 accent-[#E27B8D]">
+            <span>30g Batido</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Barra de progreso de estrellas del día -->
+      <div class="flex items-center justify-between px-1">
+        <h2 class="text-xs font-extrabold text-slate-500 uppercase tracking-wider" id="mealSectionTitle">
+          Menú de Hoy
+        </h2>
+        <span class="text-xs font-bold px-3 py-1 rounded-full bg-[#EAF8EE] text-[#1E6345] border border-[#C6EDCE]" id="dailyScoreBadge">
+          0 / 5 Comidas ⭐
+        </span>
+      </div>
+
+      <!-- Lista de Comidas -->
+      <div id="mealsContainer" class="space-y-2.5">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- ==================== 2. VISTA: GYM (CORAZONES ❤️) ==================== -->
+    <section id="view-entreno" class="space-y-3 hidden">
+      <!-- Banner Muñeca Segura -->
+      <div class="soft-card p-3 bg-[#FFF3F5] border-[#FADCE2] flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="text-base">🩹</span>
+          <div>
+            <h4 class="text-xs font-bold text-[#9E4758]">Muñeca Izquierda Safe</h4>
+            <p class="text-[10px] text-slate-500">15-20 reps · Apoyo en codos/antebrazos</p>
+          </div>
+        </div>
+        <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-white text-[#9E4758] border border-[#F6CCD4]" id="gymHeartsBadge">
+          0 Ejercicios ❤️
+        </span>
+      </div>
+
+      <!-- Selector de Sesión de Gym -->
+      <div class="grid grid-cols-3 gap-1.5">
+        <button onclick="setGymSession(1)" id="btn-gym-1" class="gym-btn py-2 px-1 rounded-xl text-[11px] font-bold border transition-all bg-[#FDE2E4] text-[#9E4758] border-[#FAD8DE] shadow-sm">
+          Día 1: Pierna
+        </button>
+        <button onclick="setGymSession(2)" id="btn-gym-2" class="gym-btn py-2 px-1 rounded-xl text-[11px] font-bold border transition-all bg-white text-slate-600 border-[#EFE8DA]">
+          Día 2: Torso
+        </button>
+        <button onclick="setGymSession(3)" id="btn-gym-3" class="gym-btn py-2 px-1 rounded-xl text-[11px] font-bold border transition-all bg-white text-slate-600 border-[#EFE8DA]">
+          Día 3: FullBody
+        </button>
+      </div>
+
+      <!-- Ejercicios Container -->
+      <div id="exerciseContainer" class="space-y-2.5">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- ==================== 3. VISTA: CALENDARIO MENSUAL ==================== -->
+    <section id="view-calendario" class="space-y-3 hidden">
+      <div class="soft-card p-4 bg-white">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <h3 class="font-extrabold text-xs tracking-wider uppercase text-slate-800 font-display" id="currentMonthYearTitle">SEPTIEMBRE 2026</h3>
+            <p class="text-[10px] text-slate-400">Tus estrellas ⭐ y corazones ❤️</p>
+          </div>
+
+          <div class="flex items-center gap-1">
+            <button onclick="changeMonth(-1)" class="w-7 h-7 rounded-xl bg-[#F8F5EE] text-slate-600 flex items-center justify-center border border-[#EFE8DA]">
+              <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+            </button>
+            <button onclick="goToCurrentMonth()" class="text-[10px] font-bold px-2 py-1 rounded-xl bg-[#D8F3DC] text-[#1E6345] border border-[#BCE8C4]">
+              Hoy
+            </button>
+            <button onclick="changeMonth(1)" class="w-7 h-7 rounded-xl bg-[#F8F5EE] text-slate-600 flex items-center justify-center border border-[#EFE8DA]">
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-7 gap-1 text-center font-bold text-[9px] text-slate-400 mb-1">
+          <div>L</div><div>M</div><div>X</div><div>J</div><div>V</div><div>S</div><div>D</div>
+        </div>
+
+        <!-- Grid de días del mes -->
+        <div class="grid grid-cols-7 gap-1" id="monthlyCalendarGrid">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- Card de Registro de Peso & Notas -->
+      <div class="soft-card p-3.5 bg-white space-y-2.5">
+        <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+          <span>📝</span> Registro del Día (<span id="healthDateTitle" class="text-[#52B788]"></span>)
+        </h4>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-[10px] font-bold text-slate-400 block mb-0.5">Peso (kg)</label>
+            <input type="number" step="0.1" id="inputWeight" placeholder="ej. 62.5" class="w-full text-xs p-2 rounded-xl bg-[#FAF7F2] border border-[#EFE8DA] text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#52B788]">
+          </div>
+          <div>
+            <label class="text-[10px] font-bold text-slate-400 block mb-0.5">Muñeca</label>
+            <select id="inputWristStatus" class="w-full text-xs p-2 rounded-xl bg-[#FAF7F2] border border-[#EFE8DA] text-slate-800 focus:outline-none">
+              <option value="sin_dolor">🟢 Bien / Recuperando</option>
+              <option value="ligera_molestia">🟡 Ligera molestia</option>
+              <option value="dolor_cuidado">🔴 Reposo</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-[10px] font-bold text-slate-400 block mb-0.5">Notas / Sensaciones</label>
+          <textarea id="inputDayNotes" rows="2" placeholder="Sensaciones en el coche, entreno, tupper..." class="w-full text-xs p-2 rounded-xl bg-[#FAF7F2] border border-[#EFE8DA] text-slate-800 focus:outline-none"></textarea>
+        </div>
+
+        <button onclick="saveDailyHealthLog()" class="w-full py-2.5 rounded-xl bg-[#D8F3DC] hover:bg-[#c9edd0] text-[#1E6345] font-extrabold text-xs shadow-sm border border-[#BCE8C4] transition-colors">
+          Guardar en el Calendario
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== 4. VISTA: COMPRA ==================== -->
+    <section id="view-compra" class="space-y-3 hidden">
+      <div class="soft-card p-3 bg-[#EAF8EE] border-[#CDEED3] flex items-center justify-between">
+        <div>
+          <h4 class="text-xs font-bold text-[#1E6345]">Supermercado Inteligente</h4>
+          <p class="text-[10px] text-slate-500">2 tandas semanales + proteína extra calculada</p>
+        </div>
+        <button onclick="resetShoppingList()" class="text-[10px] font-bold px-2 py-1 bg-white rounded-lg border border-[#CDEED3] text-[#1E6345]">
+          Reset
+        </button>
+      </div>
+
+      <!-- Tanda 1 -->
+      <div class="soft-card p-3 bg-white space-y-2">
+        <h4 class="text-[11px] font-extrabold uppercase text-[#1E6345] flex items-center gap-1.5 pb-1 border-b border-[#F0EAE1]">
+          <span>🌿</span> Tanda 1 (Dom/Lun) · Lun a Mié
+        </h4>
+        <div class="space-y-1.5" id="shop-tanda1"></div>
+      </div>
+
+      <!-- Tanda 2 -->
+      <div class="soft-card p-3 bg-white space-y-2">
+        <h4 class="text-[11px] font-extrabold uppercase text-[#9E4758] flex items-center gap-1.5 pb-1 border-b border-[#F0EAE1]">
+          <span>🌸</span> Tanda 2 (Jue/Vie) · Jue a Dom
+        </h4>
+        <div class="space-y-1.5" id="shop-tanda2"></div>
+      </div>
+
+      <!-- Despensa -->
+      <div class="soft-card p-3 bg-white space-y-2">
+        <h4 class="text-[11px] font-extrabold uppercase text-slate-700 flex items-center gap-1.5 pb-1 border-b border-[#F0EAE1]">
+          <span>📦</span> Despensa Base & Suplementos
+        </h4>
+        <div class="space-y-1.5" id="shop-despensa"></div>
+      </div>
+    </section>
+
+    <!-- ==================== 5. VISTA: CHECKLIST SALIDA ==================== -->
+    <section id="view-checklist" class="space-y-3 hidden">
+      <div class="soft-card p-3 bg-[#FFF5EE] border-[#FCE6D6] flex items-center justify-between">
+        <div>
+          <h4 class="text-xs font-bold text-[#A84A28]">Checklist Salida de Casa</h4>
+          <p class="text-[10px] text-slate-500">No olvidar nada para el coche, gym y piscina</p>
+        </div>
+        <button onclick="resetChecklist()" class="text-[10px] font-bold px-2 py-1 bg-white rounded-lg border border-[#FCE6D6] text-[#A84A28]">
+          Reset
+        </button>
+      </div>
+
+      <div class="space-y-2" id="checklistContainer">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- ==================== 6. VISTA: BATCH COOKING ==================== -->
+    <section id="view-batch" class="space-y-3 hidden">
+      <!-- Domingo -->
+      <div class="soft-card p-3.5 bg-white space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-[#EFE8DA]">
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-[#1E6345] flex items-center gap-1.5">
+            <span>🌿</span> Domingo (35 min)
+          </h4>
+          <span class="text-[9px] font-bold px-2 py-0.5 bg-[#EAF8EE] text-[#1E6345] rounded-md">Lun, Mar y Mié</span>
+        </div>
+        <ul class="space-y-2 text-xs text-slate-700">
+          <li class="flex items-start gap-2">
+            <span class="text-[#52B788] font-bold">1.</span>
+            <span><strong>Arroz + Pollo Extra:</strong> Cuece 180g de arroz (3 tuppers) y saltea a la plancha <strong>350g pechuga en dados</strong> (para ñoquis del lunes y ensaladas frías de martes y miércoles).</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-[#52B788] font-bold">2.</span>
+            <span><strong>4 Huevos Duros:</strong> Cocer 10 min. Guardar con cáscara en nevera.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-[#52B788] font-bold">3.</span>
+            <span><strong>Mix Crujiente:</strong> Rallar zanahoria + picar pimiento y cebolla en un bote.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-[#52B788] font-bold">4.</span>
+            <span><strong>Boniato en dados:</strong> Freír / Airfryer 2 boniatos (listos para las cenas).</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Miércoles -->
+      <div class="soft-card p-3.5 bg-white space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-[#EFE8DA]">
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-[#9E4758] flex items-center gap-1.5">
+            <span>🌸</span> Miércoles Noche (20 min)
+          </h4>
+          <span class="text-[9px] font-bold px-2 py-0.5 bg-[#FDE2E4] text-[#9E4758] rounded-md">Jue y Vie</span>
+        </div>
+        <ul class="space-y-2 text-xs text-slate-700">
+          <li class="flex items-start gap-2">
+            <span class="text-[#E27B8D] font-bold">1.</span>
+            <span><strong>Lote Pasta:</strong> Mientras cenas salmón, hierve 140g pasta (2 tuppers).</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-[#E27B8D] font-bold">2.</span>
+            <span><strong>Tupper Jueves:</strong> Mitad de pasta con pechuga salteada y carbonara saludable/tomate.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-[#E27B8D] font-bold">3.</span>
+            <span><strong>Tupper Viernes:</strong> Mitad de pasta con atún, pollo, maíz y salsa sweet chili.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== BOTTOM TAB BAR (ESTILO APP NATIVA MÓVIL) ==================== -->
+  <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/95 backdrop-blur-md border-t border-[#EFE8DA] py-2 px-3 flex items-center justify-around z-50 shadow-lg">
+    <button onclick="switchTab('comidas')" id="nav-comidas" class="flex flex-col items-center gap-0.5 text-[#52B788] font-bold text-[10px]">
+      <div class="w-8 h-8 rounded-xl bg-[#EAF8EE] flex items-center justify-center">
+        <i data-lucide="utensils" class="w-4 h-4"></i>
+      </div>
+      <span>Comidas</span>
+    </button>
+
+    <button onclick="switchTab('entreno')" id="nav-entreno" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600 text-[10px]">
+      <div class="w-8 h-8 rounded-xl flex items-center justify-center">
+        <i data-lucide="dumbbell" class="w-4 h-4"></i>
+      </div>
+      <span>Gym</span>
+    </button>
+
+    <button onclick="switchTab('calendario')" id="nav-calendario" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600 text-[10px]">
+      <div class="w-8 h-8 rounded-xl flex items-center justify-center">
+        <i data-lucide="calendar" class="w-4 h-4"></i>
+      </div>
+      <span>Mes</span>
+    </button>
+
+    <button onclick="switchTab('compra')" id="nav-compra" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600 text-[10px]">
+      <div class="w-8 h-8 rounded-xl flex items-center justify-center">
+        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+      </div>
+      <span>Compra</span>
+    </button>
+
+    <button onclick="switchTab('checklist')" id="nav-checklist" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600 text-[10px]">
+      <div class="w-8 h-8 rounded-xl flex items-center justify-center">
+        <i data-lucide="check-square" class="w-4 h-4"></i>
+      </div>
+      <span>Bolsa</span>
+    </button>
+
+    <button onclick="switchTab('batch')" id="nav-batch" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600 text-[10px]">
+      <div class="w-8 h-8 rounded-xl flex items-center justify-center">
+        <i data-lucide="flame" class="w-4 h-4"></i>
+      </div>
+      <span>Cocina</span>
+    </button>
+  </nav>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    const IVET_WEEKLY_QUOTES = [
+      {
+        quote: "Ivet, la constancia vence al cansancio del coche. ¡Cada tupper y cada entreno seguro es una victoria!",
+        sub: "Cuidarte con calma y cariño es tu prioridad esta semana."
+      },
+      {
+        quote: "Vamos Ivet, tu muñeca se va recuperando y tu motivación está intacta. ¡Entrenar con cabeza es de reinas!",
+        sub: "Mucho amor al proceso: paso a paso."
+      },
+      {
+        quote: "Ivet Izquierdo Blanch: eres disciplina bonita. Cumple tus ⭐ y tus ❤️ con orgullo.",
+        sub: "5 comidas nutritivas y descanso reparador."
+      },
+      {
+        quote: "El viaje Castelldefels ↔ Sant Cugat se lleva genial cuando tu cuerpo tiene energía limpia y tus tuppers listos.",
+        sub: "Proteína en el shaker y sonrisa puesta."
+      },
+      {
+        quote: "Cuidarte y comer rico no es una obligación, es el mayor regalo que te das cada día, Ivet.",
+        sub: "¡A por tus estrellas de hoy!"
+      }
+    ];
+
+    function updateWeeklyMotivation() {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 1);
+      const diff = now - start + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+      const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const weekNumber = Math.ceil((dayOfYear + start.getDay() + 1) / 7);
+
+      const quoteObj = IVET_WEEKLY_QUOTES[weekNumber % IVET_WEEKLY_QUOTES.length];
+      document.getElementById('weeklyMotivationalQuote').textContent = `"${quoteObj.quote}"`;
+      document.getElementById('weeklyBadge').textContent = `MOTIVACIÓN SEMANA ${weekNumber} · IVET`;
+      
+      const options = { weekday: 'short', day: 'numeric', month: 'short' };
+      document.getElementById('currentDateFormatted').textContent = now.toLocaleDateString('es-ES', options);
+    }
+
+    const MEAL_PLANS = {
+      lunes: [
+        { id: 'm_desayuno', time: '07:00 h', name: 'Desayuno Express', dish: 'Tostadas Integrales con Aguacate y Pavo / Huevo', details: '60g pan integral + 50g aguacate + 40g pavo (o 1 huevo duro del batch) + kiwi + café.', tag: 'Casa', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' },
+        { id: 'm_snack', time: '11:30 h', name: 'Media Mañana', dish: 'Fruta Fresca + Nueces Crudas', details: '1 manzana o pera (150g) + 25g nueces peladas.', tag: 'Oficina Sant Cugat', tagColor: 'bg-[#FFF5EE] text-[#A84A28] border-[#FCE6D6]' },
+        { id: 'm_almuerzo', time: '14:00 h', name: 'Almuerzo en Tupper', dish: 'Ñoquis de Patata con Pollo y Tomatitos Cherry', details: '180g ñoquis + 140g pechuga pollo dorada + 80g cherrys + AOVE + orégano (~35g proteína).', tag: 'Micro 1:30m', tagColor: 'bg-[#FDE2E4] text-[#9E4758] border-[#FAD8DE]' },
+        { id: 'm_merienda', time: '17:30 h', name: 'Merienda / Coche', dish: 'Batido de Proteína con Leche', details: '30g proteína en polvo + 250ml leche (la leche está en el curro).', tag: 'Shaker', tagColor: 'bg-[#FAF0F8] text-[#863D70] border-[#F5DDF0]' },
+        { id: 'm_cena', time: '21:00 h', name: 'Cena Caliente (10m)', dish: 'Lenguado a la Plancha con Boniato Crujiente', details: '180g filetes lenguado fresco + 150g boniato frito/airfryer + canónigos y tomate.', tag: 'En Casa', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' }
+      ],
+      martes: [
+        { id: 'm_desayuno', time: '07:00 h', name: 'Desayuno (0 seg)', dish: 'Overnight Oats Fríos con Frutos Rojos', details: '40g avena (dejada en leche desde anoche) + 50g arándanos + canela.', tag: 'Nevera', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' },
+        { id: 'm_snack', time: '11:30 h', name: 'Media Mañana', dish: 'Plátano + Almendras Crudas', details: '1 plátano (100g) + 20g almendras con piel (~18 uds).', tag: 'Oficina Sant Cugat', tagColor: 'bg-[#FFF5EE] text-[#A84A28] border-[#FCE6D6]' },
+        { id: 'm_almuerzo', time: '14:00 h', name: 'Tupper Proteico', dish: 'Ensalada de Arroz con Pollo, Lentejas y Atún', details: '60g arroz basmati + 120g pollo/pavo a la plancha (batch) + 80g lentejas + 1 lata atún + vinagreta (~38g proteína).', tag: 'Tupper Frío', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' },
+        { id: 'm_merienda', time: '17:30 h', name: 'Merienda / Coche', dish: 'Batido de Proteína con Leche + Chocolate', details: '30g proteína + 250ml leche + 15g chocolate negro (>85%).', tag: 'Shaker', tagColor: 'bg-[#FAF0F8] text-[#863D70] border-[#F5DDF0]' },
+        { id: 'm_cena', time: '21:00 h', name: 'Cena en Casa (8m)', dish: 'Entrecot / Filete de Ternera con Espárragos', details: '160g ternera magra a la plancha + 120g trigueros + 100g pimientos asados.', tag: 'En Casa', tagColor: 'bg-[#FFF5EE] text-[#A84A28] border-[#FCE6D6]' }
+      ],
+      miercoles: [
+        { id: 'm_desayuno', time: '07:00 h', name: 'Desayuno Express', dish: 'Tostadas de Centeno con Cottage y Jamón', details: '60g pan centeno + 60g requesón/cottage + 40g jamón serrano + kiwi + café.', tag: 'Casa', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' },
+        { id: 'm_snack', time: '11:30 h', name: 'Media Mañana', dish: 'Manzana Crujiente + Nueces Crudas', details: '1 manzana (150g) + 20g nueces peladas.', tag: 'Oficina Sant Cugat', tagColor: 'bg-[#FFF5EE] text-[#A84A28] border-[#FCE6D6]' },
+        { id: 'm_almuerzo', time: '14:00 h', name: 'Tupper Proteico', dish: 'Arroz Estilo Ensalada con Pollo, Huevo y Queso', details: '60g arroz + 120g pechuga pollo/pavo (batch) + 1 huevo duro + 40g mozzarella + maíz dulce (~37g proteína).', tag: 'Tupper Frío', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' },
+        { id: 'm_merienda', time: '17:30 h', name: 'Merienda / Coche', dish: 'Batido de Proteína + Crema de Cacahuete', details: '30g proteína + 250ml leche + 10g crema cacahuete.', tag: 'Shaker', tagColor: 'bg-[#FAF0F8] text-[#863D70] border-[#F5DDF0]' },
+        { id: 'm_cena', time: '21:00 h', name: 'Cena + Batch Pasta', dish: 'Filete de Salmón con Boniato y Calabacín', details: '140g salmón fresco + 140g boniato frito/airfryer + calabacín. ¡Hervir la pasta de jueves y viernes a la vez!', tag: 'En Casa + Batch', tagColor: 'bg-[#FDE2E4] text-[#9E4758] border-[#FAD8DE]' }
+      ],
+      jueves: [
+        { id: 'm_desayuno', time: '07:00 h', name: 'Desayuno Express', dish: 'Tostadas con Huevos Revueltos y Naranja', details: '60g pan integral + 2 huevos revueltos rápidos en sartén + 1 naranja.', tag: 'Casa', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' },
+        { id: 'm_snack', time: '11:30 h', name: 'Media Mañana', dish: 'Kéfir o Yogur Bebible + Arándanos', details: '150g kéfir bebible + 30g arándanos frescos (o 1 plátano).', tag: 'Oficina Sant Cugat', tagColor: 'bg-[#FFF5EE] text-[#A84A28] border-[#FCE6D6]' },
+        { id: 'm_almuerzo', time: '14:00 h', name: 'Almuerzo en Tupper', dish: 'Pasta Carbonara Saludable con Pollo', details: '70g pasta (batch) + 140g pollo en dados + huevo batido con 1 cda. queso fresco (~38g proteína).', tag: 'Micro 1:30m', tagColor: 'bg-[#FDE2E4] text-[#9E4758] border-[#FAD8DE]' },
+        { id: 'm_merienda', time: '17:30 h', name: 'Merienda / Coche', dish: 'Batido de Proteína con Leche', details: '30g proteína + 250ml leche fresca.', tag: 'Shaker', tagColor: 'bg-[#FAF0F8] text-[#863D70] border-[#F5DDF0]' },
+        { id: 'm_cena', time: '21:00 h', name: 'Cena Ligera (10m)', dish: 'Tataki / Filete de Atún con Ensalada', details: '160g atún fresco a la plancha (vuelta y vuelta) + ensalada de lechuga, tomate y pimientos.', tag: 'En Casa', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' }
+      ],
+      viernes: [
+        { id: 'm_desayuno', time: '07:00 h', name: 'Desayuno Express', dish: 'Tostadas con Jamón Serrano y Tomate', details: '60g pan integral + 40g tomate rallado + 40g jamón serrano + kiwi o piña.', tag: 'Casa', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' },
+        { id: 'm_snack', time: '11:30 h', name: 'Media Mañana', dish: 'Manzana + Almendras Crudas', details: '1 manzana (150g) + 20g almendras con piel.', tag: 'Oficina Sant Cugat', tagColor: 'bg-[#FFF5EE] text-[#A84A28] border-[#FCE6D6]' },
+        { id: 'm_almuerzo', time: '14:00 h', name: 'Tupper Proteico', dish: 'Ensalada Fría de Pasta con Pollo, Atún y Sweet Chili', details: '70g pasta + 100g dados de pollo + 1 lata atún + cherrys + maíz dulce + sweet chili (~38g proteína).', tag: 'Tupper Frío', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' },
+        { id: 'm_merienda', time: '17:30 h', name: 'Merienda Fin de Semana', dish: 'Batido de Proteína con Leche', details: '30g proteína + 250ml leche bien fría.', tag: 'Shaker', tagColor: 'bg-[#FAF0F8] text-[#863D70] border-[#F5DDF0]' },
+        { id: 'm_cena', time: '21:00 h', name: 'Cena Viernes Noche', dish: 'Hamburguesa de Ternera con Boniato Crujiente', details: '160g hamburguesa casera 100% ternera magra + 140g boniato frito/airfryer + rúcula y cherrys.', tag: 'En Casa', tagColor: 'bg-[#FDE2E4] text-[#9E4758] border-[#FAD8DE]' }
+      ],
+      sabado: [
+        { id: 'm_desayuno', time: '09:00 h', name: 'Desayuno Calma', dish: 'Huevos Revueltos con Champiñones y Aguacate', details: '60g pan masa madre + 2 huevos revueltos con champiñones al ajillo + 40g aguacate + naranja.', tag: 'Finde', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' },
+        { id: 'm_snack', time: '12:00 h', name: 'Aperitivo', dish: 'Frutos Secos o Fruta', details: '25g mezcla de nueces, almendras y avellanas.', tag: 'Libre', tagColor: 'bg-[#FFF5EE] text-[#A84A28] border-[#FCE6D6]' },
+        { id: 'm_almuerzo', time: '14:30 h', name: 'Almuerzo en Casa', dish: 'Ñoquis con Salsa de Tomate Casera y Pollo', details: '180g ñoquis (hervir 2 min) + 140g pechuga pollo dorada + tomate con albahaca y ensalada.', tag: 'Caliente', tagColor: 'bg-[#FDE2E4] text-[#9E4758] border-[#FAD8DE]' },
+        { id: 'm_merienda', time: '18:30 h', name: 'Smoothie', dish: 'Smoothie de Proteína con Leche y Fresas', details: '30g proteína + 200ml leche + fresas batidas con hielo.', tag: 'Smoothie', tagColor: 'bg-[#FAF0F8] text-[#863D70] border-[#F5DDF0]' },
+        { id: 'm_cena', time: '21:30 h', name: 'Cena Ligera', dish: 'Lenguado a la Plancha con Calabacín', details: '180g lenguado fresco con ajo y perejil + calabacín braseado + ensalada de tomate.', tag: 'En Casa', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' }
+      ],
+      domingo: [
+        { id: 'm_desayuno', time: '09:30 h', name: 'Desayuno Domingo', dish: 'Bowl de Yogur Griego con Avena Tostada y Frutos Rojos', details: '160g yogur natural + 35g avena tostada en sartén + 50g arándanos + chía.', tag: 'Bowl', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' },
+        { id: 'm_snack', time: '12:30 h', name: 'Aperitivo', dish: 'Zumo de Tomate Aliñado con Limón', details: '200ml zumo de tomate con sal, pimienta y limón (o 1 manzana).', tag: 'Aperitivo', tagColor: 'bg-[#FFF5EE] text-[#A84A28] border-[#FCE6D6]' },
+        { id: 'm_almuerzo', time: '14:30 h', name: 'Almuerzo en Casa', dish: 'Arroz con Atún / Calamares y Ensalada', details: '65g arroz + lata atún grande (80g) o calamares + ensalada. ¡Cocer lote de arroz para la semana!', tag: 'Batch', tagColor: 'bg-[#FDE2E4] text-[#9E4758] border-[#FAD8DE]' },
+        { id: 'm_merienda', time: '18:30 h', name: 'Merienda Batch', dish: 'Batido de Proteína con Leche + Requesón', details: '30g proteína + 250ml leche + 1 tostada fina con requesón.', tag: 'Shaker', tagColor: 'bg-[#FAF0F8] text-[#863D70] border-[#F5DDF0]' },
+        { id: 'm_cena', time: '21:00 h', name: 'Cena Express', dish: 'Tortilla de Espinacas con Pimientos Asados', details: 'Tortilla de 2 huevos con 100g espinacas + 100g pimientos asados.', tag: 'En Casa', tagColor: 'bg-[#EAF8EE] text-[#1E6345] border-[#CDEED3]' }
+      ]
+    };
+
+    const GYM_ROUTINES = {
+      1: {
+        title: "Día 1: Pierna, Glúteo & Core",
+        subtitle: "Cero carga en muñecas · Máquinas guiadas y bandas",
+        exercises: [
+          { id: 'ex_prensa', name: 'Prensa Inclinada (45°)', sets: '4 series x 15-18 reps', rest: '75-90s', safeTip: 'Manos suaves en muslos o brazos en pecho. No agarres manetas.', musc: 'Pierna' },
+          { id: 'ex_ext_cuad', name: 'Extensión de Cuádriceps', sets: '3 series x 18-20 reps', rest: '60s', safeTip: 'Brazos cruzados en pecho. Muñeca 100% libre.', musc: 'Cuádriceps' },
+          { id: 'ex_femoral', name: 'Curl Femoral Tumbado/Sentado', sets: '4 series x 15-18 reps', rest: '60s', safeTip: 'Antebrazos sobre cojín o frente en manos abiertas.', musc: 'Femoral' },
+          { id: 'ex_hipthrust', name: 'Puente de Glúteo con Banda', sets: '4 series x 20 reps', rest: '60s', safeTip: 'Palmas abiertas en el suelo sin empujar.', musc: 'Glúteos' },
+          { id: 'ex_gemelos', name: 'Gemelos en Máquina o Escalón', sets: '3 series x 20-25 reps', rest: '45s', safeTip: 'Peso en hombros o escalón sin agarrar peso.', musc: 'Gemelos' },
+          { id: 'ex_plancha', name: 'Plancha sobre ANTEBRAZOS', sets: '3 series x 35-40s', rest: '45s', safeTip: 'Codos bajo hombros, manos abiertas y relajadas.', musc: 'Core' }
+        ]
+      },
+      2: {
+        title: "Día 2: Torso Protegido (Bombas)",
+        subtitle: "Cargas moderadas/ligeras · Cero flexión de muñeca",
+        exercises: [
+          { id: 'ex_pecdeck', name: 'Pec Deck / Aperturas en Máquina', sets: '4 series x 18-20 reps', rest: '60s', safeTip: 'Empuja con la cara interna de codos y antebrazos, manos abiertas.', musc: 'Pectoral' },
+          { id: 'ex_laterales', name: 'Elevaciones Laterales con Manguito', sets: '4 series x 20 reps', rest: '45s', safeTip: 'Correa en el antebrazo cerca del codo. Cero tensión en mano.', musc: 'Deltoides' },
+          { id: 'ex_pullover', name: 'Pullover en Polea Alta', sets: '3 series x 18-20 reps', rest: '60s', safeTip: 'Palmas abiertas apoyadas en barra/cuerda con muñeca recta.', musc: 'Dorsal' },
+          { id: 'ex_remo', name: 'Remo en Máquina con Apoyo en Pecho', sets: '4 series x 15-18 reps', rest: '60s', safeTip: 'Peso ligero, agarre neutro o con manguito. Tira con escápulas.', musc: 'Espalda' },
+          { id: 'ex_facepull', name: 'Face Pull con Cuerda Ligera', sets: '3 series x 20 reps', rest: '45s', safeTip: 'Muñecas rígidas en línea recta con antebrazo.', musc: 'Hombro Post.' },
+          { id: 'ex_crunch', name: 'Crunch Abdominal Brazos Cruzados', sets: '3 series x 20 reps', rest: '45s', safeTip: 'Brazos cruzados en el pecho, nunca en la nuca.', musc: 'Abdomen' }
+        ]
+      },
+      3: {
+        title: "Día 3: Full Body & Cardio",
+        subtitle: "Metabólico, máquinas guiadas y cardio sin impacto",
+        exercises: [
+          { id: 'ex_hack', name: 'Sentadilla Hack o Multipower', sets: '4 series x 15 reps', rest: '75s', safeTip: 'Peso en hombros, manos solo tocan mangos para desbloquear.', musc: 'Piernas' },
+          { id: 'ex_prensa_uni', name: 'Prensa Horizontal Unilateral', sets: '3 series x 15 reps/pierna', rest: '60s', safeTip: 'Brazos libres. Corrige descompensaciones.', musc: 'Piernas' },
+          { id: 'ex_pajaros', name: 'Pájaros en Máquina Inversa', sets: '3 series x 20 reps', rest: '45s', safeTip: 'Dorso de antebrazos contra almohadillas, manos sueltas.', musc: 'Hombro Post.' },
+          { id: 'ex_romana', name: 'Elevación Rodillas en Silla Romana', sets: '3 series x 15 reps', rest: '45s', safeTip: 'Todo el peso del cuerpo en codos. Manos colgando libres.', musc: 'Abdomen' },
+          { id: 'ex_cardio', name: 'Bici Estática o Cinta Inclinada', sets: '20 minutos ritmo cómodo', rest: 'Zona 2', safeTip: 'Manos suaves en manillar o braceo libre en cinta sin impacto.', musc: 'Cardio' }
+        ]
+      }
+    };
+
+    const CHECKLIST_ITEMS = [
+      { id: 'c_tupper', cat: '🍱 Comida', name: 'Tupper de Almuerzo + Cubiertos' },
+      { id: 'c_snack', cat: '🍱 Comida', name: 'Snack Media Mañana (Fruta + Frutos secos)' },
+      { id: 'c_prote', cat: '🍱 Comida', name: 'Shaker con Proteína en polvo (leche en el curro)' },
+      { id: 'c_creatina', cat: '🍱 Comida', name: 'Creatina 5g tomada en el desayuno' },
+      { id: 'c_agua', cat: '🍱 Comida', name: 'Botella térmica de agua para el coche/oficina' },
+      
+      { id: 'c_bikini', cat: '🏊‍♀️ Piscina', name: 'Bikini / Bañador' },
+      { id: 'c_chanclas', cat: '🏊‍♀️ Piscina', name: 'Chanclas de piscina y vestuario' },
+      { id: 'c_gorro', cat: '🏊‍♀️ Piscina', name: 'Gorro + Gafas de piscina' },
+      { id: 'c_toalla_pisc', cat: '🏊‍♀️ Piscina', name: 'Toalla grande / Microfibra' },
+      { id: 'c_bolsa_mojada', cat: '🏊‍♀️ Piscina', name: 'Bolsa impermeable para ropa mojada' },
+
+      { id: 'c_ropa_gym', cat: '🏋️‍♀️ Gym', name: 'Ropa deportiva + Zapatillas' },
+      { id: 'c_munequera', cat: '🏋️‍♀️ Gym', name: 'Muñequera / Vendaje protector muñeca' },
+      { id: 'c_toalla_sala', cat: '🏋️‍♀️ Gym', name: 'Toalla pequeña de sala' },
+      { id: 'c_agua_gym', cat: '🏋️‍♀️ Gym', name: 'Botella de agua para entrenar' },
+      { id: 'c_manguito', cat: '🏋️‍♀️ Gym', name: 'Manguito / Correa para poleas' },
+      { id: 'c_candado', cat: '🏋️‍♀️ Gym', name: 'Candado para taquilla' },
+
+      { id: 'c_llaves', cat: '🔑 Imprescindibles', name: 'Llaves de casa y llaves del coche' },
+      { id: 'c_movil', cat: '🔑 Imprescindibles', name: 'Móvil + Cable cargador de coche' },
+      { id: 'c_tarjetas', cat: '🔑 Imprescindibles', name: 'DNI, cartera y tarjeta acceso gym/trabajo' },
+      { id: 'c_neceser', cat: '🔑 Imprescindibles', name: 'Neceser ducha (gel, champú, peine, gomas)' },
+      { id: 'c_ropa_cambio', cat: '🔑 Imprescindibles', name: 'Ropa interior limpia de cambio' }
+    ];
+
+    const SHOPPING_DATA = {
+      tanda1: [
+        { id: 'sh1_pollo', name: 'Pechuga de pollo / pavo limpia', qty: '400g (150g Lun + 240g ensaladas Mar y Mié)', use: 'Comidas Lun, Mar y Mié' },
+        { id: 'sh1_lenguado', name: 'Filetes de lenguado frescos', qty: '180g (1-2 piezas)', use: 'Lunes Cena' },
+        { id: 'sh1_ternera', name: 'Entrecot / Filete ternera magra', qty: '160g', use: 'Martes Cena' },
+        { id: 'sh1_salmon', name: 'Filete de salmón fresco', qty: '140g - 150g', use: 'Miércoles Cena' },
+        { id: 'sh1_gnoquis', name: 'Ñoquis de patata frescos', qty: '1 paquete (500g)', use: 'Lunes Almuerzo y Sábado' },
+        { id: 'sh1_boniato', name: 'Boniatos / Batatas', qty: '3 unidades (~450g)', use: 'Cenas Lun, Mié y Vie' },
+        { id: 'sh1_zanahorias', name: 'Zanahorias frescas', qty: '1 bolsa (500g)', use: 'Batch domingo y snacks' },
+        { id: 'sh1_pimientos', name: 'Pimientos y Espinacas', qty: '2 pimientos + 1 bolsa espinacas', use: 'Batch domingo y ensaladas' },
+        { id: 'sh1_fruta1', name: 'Fruta fresca Lote 1', qty: '3 plátanos + 4 manzanas/peras + 1 aguacate', use: 'Desayunos y oficina' },
+        { id: 'sh1_lacteos', name: 'Queso batido 0% / Requesón', qty: '1 tarrina de cada', use: 'Desayunos rápidos' }
+      ],
+      tanda2: [
+        { id: 'sh2_pollo', name: 'Pechuga de pollo o pavo', qty: '380g - 400g', use: 'Jueves pasta + Viernes ensalada + Sábado' },
+        { id: 'sh2_atun', name: 'Lomo / Filete de atún fresco', qty: '160g', use: 'Jueves Cena' },
+        { id: 'sh2_picada', name: 'Carne picada 100% ternera magra', qty: '160g (hamburguesa)', use: 'Viernes Cena' },
+        { id: 'sh2_lenguado', name: 'Filetes de lenguado', qty: '180g', use: 'Sábado Cena' },
+        { id: 'sh2_cherrys', name: 'Tomates cherry y Calabacines', qty: '300g cherrys + 2 calabacines', use: 'Tuppers pasta y cenas' },
+        { id: 'sh2_fruta2', name: 'Fruta fresca Lote 2', qty: '1 bandeja fresas/arándanos + 3 naranjas', use: 'Finde y smoothies' }
+      ],
+      despensa: [
+        { id: 'shd_creatina', name: 'Creatina Monohidrato', qty: '1 bote (300g - 500g)', use: '5g diarios al despertar' },
+        { id: 'shd_proteina', name: 'Proteína en polvo (Whey/Aislado)', qty: '1 bote (1kg)', use: '30g merienda diaria' },
+        { id: 'shd_leche', name: 'Leche desnatada / semidesnatada', qty: '3 litros semanales', use: 'Batidos diarios en el curro' },
+        { id: 'shd_arroz', name: 'Arroz Basmati o integral', qty: '1 paquete (500g)', use: 'Batch cooking domingo' },
+        { id: 'shd_pasta', name: 'Pasta (plumas/macarrones)', qty: '1 paquete (500g)', use: 'Batch cooking miércoles' },
+        { id: 'shd_huevos', name: 'Huevos camperos (Clase 0 o 1)', qty: 'Cartón 18 unidades', use: 'Batch huevos duros + cenas' },
+        { id: 'shd_atun', name: 'Latas de atún al natural', qty: '6 latas', use: 'Tuppers arroz, pasta y ensalada' },
+        { id: 'shd_lentejas', name: 'Botes de lentejas o garbanzos', qty: '2 botes cristal', use: 'Ensaladas frías' },
+        { id: 'shd_maiz', name: 'Maíz dulce en lata', qty: '1 pack de 3 latitas', use: 'Ensaladas' },
+        { id: 'shd_frutos', name: 'Nueces y Almendras crudas', qty: '1 bolsa de cada (150g)', use: 'Snacks oficina Sant Cugat' },
+        { id: 'shd_aove', name: 'Aceite de Oliva Virgen Extra', qty: '1 botella', use: 'Aliños y cocina diaria' },
+        { id: 'shd_chili', name: 'Salsa Sweet Chili', qty: '1 botellita pequeña', use: 'Tupper pasta del viernes' }
+      ]
+    };
+
+    // State Variables
+    let selectedDateKey = ''; // YYYY-MM-DD
+    let calendarYear = 2026;
+    let calendarMonth = 9; // 0-indexed (9 = October)
+    let currentGymSession = 1;
+
+    function getStoredData(key, defaultVal) {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : defaultVal;
+    }
+
+    function setStoredData(key, val) {
+      localStorage.setItem(key, JSON.stringify(val));
+    }
+
+    function formatDateKey(d) {
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function getDayOfWeekName(d) {
+      const names = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+      return names[d.getDay()];
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date();
+      selectedDateKey = formatDateKey(today);
+      calendarYear = today.getFullYear();
+      calendarMonth = today.getMonth();
+
+      document.getElementById('calendarDatePicker').value = selectedDateKey;
+
+      updateWeeklyMotivation();
+      renderMealsForDate();
+      renderGymForDate();
+      renderMonthlyCalendar();
+      renderShoppingList();
+      renderChecklist();
+      loadHealthLog();
+      lucide.createIcons();
+    });
+
+    function changeSelectedDate(dateStr) {
+      if (!dateStr) return;
+      selectedDateKey = dateStr;
+      const parts = dateStr.split('-');
+      const dt = new Date(parts[0], parts[1] - 1, parts[2]);
+      calendarYear = dt.getFullYear();
+      calendarMonth = dt.getMonth();
+
+      renderMealsForDate();
+      renderGymForDate();
+      renderMonthlyCalendar();
+      loadHealthLog();
+      lucide.createIcons();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById('view-' + tabId).classList.remove('hidden');
+
+      // Update bottom nav active style
+      document.querySelectorAll('nav.fixed button').forEach(btn => {
+        btn.classList.remove('text-[#52B788]', 'font-bold');
+        btn.classList.add('text-slate-400');
+        btn.querySelector('div')?.classList.remove('bg-[#EAF8EE]');
+      });
+
+      const activeNav = document.getElementById('nav-' + tabId);
+      if (activeNav) {
+        activeNav.classList.add('text-[#52B788]', 'font-bold');
+        activeNav.classList.remove('text-slate-400');
+        activeNav.querySelector('div')?.classList.add('bg-[#EAF8EE]');
+      }
+
+      if (tabId === 'calendario') {
+        renderMonthlyCalendar();
+      }
+
+      lucide.createIcons();
+    }
+
+    // ==================== COMIDAS (ESTRELLAS ⭐) ====================
+    function renderMealsForDate() {
+      const container = document.getElementById('mealsContainer');
+      const parts = selectedDateKey.split('-');
+      const dt = new Date(parts[0], parts[1] - 1, parts[2]);
+      const dayName = getDayOfWeekName(dt);
+      
+      const meals = MEAL_PLANS[dayName] || MEAL_PLANS['lunes'];
+      const checks = getStoredData('meals_' + selectedDateKey, {});
+
+      const displayOptions = { weekday: 'long', day: 'numeric', month: 'short' };
+      document.getElementById('mealSectionTitle').textContent = `${dt.toLocaleDateString('es-ES', displayOptions).toUpperCase()}`;
+
+      container.innerHTML = meals.map(m => {
+        const isChecked = !!checks[m.id];
+        return `
+          <div class="soft-card p-3 transition-all flex items-start gap-3 ${isChecked ? 'bg-[#F2FAF4] border-[#BCE8C4]' : 'bg-white'}">
+            <input type="checkbox" id="${m.id}" onchange="toggleMealCheck('${m.id}')" ${isChecked ? 'checked' : ''} 
+                   class="custom-check-meal mt-1 w-4 h-4 rounded-md accent-[#52B788] bg-white border-[#D6CDBC] cursor-pointer">
+            <div class="flex-1">
+              <div class="flex items-center justify-between gap-1 mb-0.5">
+                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">${m.time} · ${m.name}</span>
+                <span class="text-[9px] font-bold px-2 py-0.5 rounded-md border ${m.tagColor}">${m.tag}</span>
+              </div>
+              <h4 class="text-xs font-bold text-slate-800 ${isChecked ? 'line-through text-slate-400' : ''}">${m.dish}</h4>
+              <p class="text-[11px] text-slate-500 mt-0.5 leading-snug">${m.details}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updateMealScoreBadge();
+      lucide.createIcons();
+    }
+
+    function toggleMealCheck(mealId) {
+      const checks = getStoredData('meals_' + selectedDateKey, {});
+      checks[mealId] = !checks[mealId];
+      setStoredData('meals_' + selectedDateKey, checks);
+      renderMealsForDate();
+      renderMonthlyCalendar();
+    }
+
+    function updateMealScoreBadge() {
+      const checks = getStoredData('meals_' + selectedDateKey, {});
+      const count = Object.values(checks).filter(Boolean).length;
+      document.getElementById('dailyScoreBadge').textContent = `${count} / 5 Comidas ⭐`;
+    }
+
+    function toggleCreatine() {
+      const isChecked = document.getElementById('check-creatina').checked;
+      setStoredData('creatina_' + selectedDateKey, isChecked);
+    }
+
+    function toggleProtein() {
+      const isChecked = document.getElementById('check-proteina').checked;
+      setStoredData('proteina_' + selectedDateKey, isChecked);
+    }
+
+    // ==================== GYM (CORAZONES ❤️) ====================
+    function setGymSession(sessionNum) {
+      currentGymSession = sessionNum;
+      document.querySelectorAll('.gym-btn').forEach((btn, idx) => {
+        if (idx + 1 === sessionNum) {
+          btn.classList.add('bg-[#FDE2E4]', 'text-[#9E4758]', 'border-[#FAD8DE]', 'shadow-sm');
+          btn.classList.remove('bg-white', 'text-slate-600', 'border-[#EFE8DA]');
+        } else {
+          btn.classList.remove('bg-[#FDE2E4]', 'text-[#9E4758]', 'border-[#FAD8DE]', 'shadow-sm');
+          btn.classList.add('bg-white', 'text-slate-600', 'border-[#EFE8DA]');
+        }
+      });
+      renderGymForDate();
+    }
+
+    function renderGymForDate() {
+      const container = document.getElementById('exerciseContainer');
+      const session = GYM_ROUTINES[currentGymSession];
+      const gymData = getStoredData('gym_' + selectedDateKey, {});
+
+      container.innerHTML = `
+        <div class="px-1 mb-1">
+          <h3 class="font-extrabold text-xs text-slate-800 uppercase tracking-wider font-display">${session.title}</h3>
+          <p class="text-[10px] text-slate-400">${session.subtitle}</p>
+        </div>
+      ` + session.exercises.map(ex => {
+        const entry = gymData[ex.id] || { done: false, weight: '' };
+        return `
+          <div class="soft-card p-3 space-y-2 ${entry.done ? 'bg-[#FFF3F5] border-[#FADCE2]' : 'bg-white'}">
+            <div class="flex items-start justify-between gap-1.5">
+              <div class="flex items-start gap-2.5">
+                <input type="checkbox" onchange="toggleExercise('${ex.id}')" ${entry.done ? 'checked' : ''} 
+                       class="custom-check-heart mt-0.5 w-4 h-4 rounded-md accent-[#E27B8D] bg-white border-[#D6CDBC] cursor-pointer">
+                <div>
+                  <h4 class="text-xs font-bold text-slate-800 ${entry.done ? 'line-through text-slate-400' : ''}">${ex.name}</h4>
+                  <div class="flex items-center gap-1.5 text-[10px] text-[#9E4758] font-semibold mt-0.5">
+                    <span>${ex.sets}</span>
+                    <span>·</span>
+                    <span class="text-slate-400">${ex.rest}</span>
+                  </div>
+                </div>
+              </div>
+              <span class="text-[9px] font-bold px-2 py-0.5 bg-[#FAF7F2] text-slate-500 rounded-md border border-[#EFE8DA] shrink-0">${ex.musc}</span>
+            </div>
+
+            <div class="text-[11px] text-[#1E6345] bg-[#EAF8EE] p-2 rounded-xl border border-[#CDEED3] flex items-start gap-1.5">
+              <span class="text-xs">🛡️</span>
+              <span><strong>Técnica:</strong> ${ex.safeTip}</span>
+            </div>
+
+            <div class="flex items-center gap-2 pt-0.5">
+              <span class="text-[10px] font-bold text-slate-400">Peso usado:</span>
+              <input type="text" placeholder="ej. 35 kg o placa 4" value="${entry.weight || ''}" 
+                     onchange="updateExerciseWeight('${ex.id}', this.value)"
+                     class="flex-1 text-[11px] px-2.5 py-1 rounded-xl bg-[#FAF7F2] border border-[#EFE8DA] text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#52B788]">
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updateGymHeartsBadge();
+      lucide.createIcons();
+    }
+
+    function toggleExercise(exId) {
+      const gymData = getStoredData('gym_' + selectedDateKey, {});
+      if (!gymData[exId]) gymData[exId] = { done: false, weight: '' };
+      gymData[exId].done = !gymData[exId].done;
+      setStoredData('gym_' + selectedDateKey, gymData);
+      renderGymForDate();
+      renderMonthlyCalendar();
+    }
+
+    function updateExerciseWeight(exId, val) {
+      const gymData = getStoredData('gym_' + selectedDateKey, {});
+      if (!gymData[exId]) gymData[exId] = { done: false, weight: '' };
+      gymData[exId].weight = val;
+      setStoredData('gym_' + selectedDateKey, gymData);
+    }
+
+    function updateGymHeartsBadge() {
+      const gymData = getStoredData('gym_' + selectedDateKey, {});
+      const count = Object.values(gymData).filter(e => e.done).length;
+      document.getElementById('gymHeartsBadge').textContent = `${count} Ejercicios ❤️`;
+    }
+
+    // ==================== CALENDARIO MENSUAL ====================
+    const MONTH_NAMES = [
+      "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO",
+      "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"
+    ];
+
+    function changeMonth(delta) {
+      calendarMonth += delta;
+      if (calendarMonth > 11) {
+        calendarMonth = 0;
+        calendarYear += 1;
+      } else if (calendarMonth < 0) {
+        calendarMonth = 11;
+        calendarYear -= 1;
+      }
+      renderMonthlyCalendar();
+    }
+
+    function goToCurrentMonth() {
+      const today = new Date();
+      calendarYear = today.getFullYear();
+      calendarMonth = today.getMonth();
+      changeSelectedDate(formatDateKey(today));
+    }
+
+    function renderMonthlyCalendar() {
+      document.getElementById('currentMonthYearTitle').textContent = `${MONTH_NAMES[calendarMonth]} ${calendarYear}`;
+
+      const grid = document.getElementById('monthlyCalendarGrid');
+      grid.innerHTML = '';
+
+      const firstDayOfMonth = new Date(calendarYear, calendarMonth, 1);
+      const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+
+      let startingDay = firstDayOfMonth.getDay() - 1;
+      if (startingDay === -1) startingDay = 6;
+
+      for (let i = 0; i < startingDay; i++) {
+        grid.innerHTML += `<div class="h-13 rounded-xl bg-transparent"></div>`;
+      }
+
+      const todayStr = formatDateKey(new Date());
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dObj = new Date(calendarYear, calendarMonth, day);
+        const dateKey = formatDateKey(dObj);
+        const isSelected = (dateKey === selectedDateKey);
+        const isToday = (dateKey === todayStr);
+
+        const mealData = getStoredData('meals_' + dateKey, {});
+        const starsCount = Object.values(mealData).filter(Boolean).length;
+
+        const gymData = getStoredData('gym_' + dateKey, {});
+        const heartsCount = Object.values(gymData).filter(e => e.done).length;
+
+        grid.innerHTML += `
+          <div onclick="changeSelectedDate('${dateKey}')" 
+               class="h-13 rounded-xl p-1 flex flex-col justify-between cursor-pointer transition-all border text-left
+                      ${isSelected ? 'border-[#52B788] bg-[#EAF8EE] shadow-sm scale-105' : 'border-[#EFE8DA] bg-[#FAF7F2] hover:bg-[#F2ECE1]'}
+                      ${isToday && !isSelected ? 'ring-1 ring-[#52B788]' : ''}">
+            
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-extrabold ${isToday ? 'text-[#1E6345]' : 'text-slate-600'}">${day}</span>
+              ${starsCount === 5 ? '<span class="text-[8px] text-[#52B788]">★5</span>' : ''}
+            </div>
+
+            <div class="flex flex-col text-[8px] leading-tight mt-0.5">
+              <span class="text-[#52B788] truncate">${starsCount > 0 ? '⭐'.repeat(Math.min(starsCount, 3)) : '·'}</span>
+              <span class="text-[#E27B8D] truncate">${heartsCount > 0 ? '❤️'.repeat(Math.min(heartsCount, 3)) : '·'}</span>
+            </div>
+          </div>
+        `;
+      }
+
+      const parts = selectedDateKey.split('-');
+      const dt = new Date(parts[0], parts[1] - 1, parts[2]);
+      document.getElementById('healthDateTitle').textContent = dt.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+    }
+
+    // ==================== CHECKLIST & COMPRA ====================
+    function renderChecklist() {
+      const container = document.getElementById('checklistContainer');
+      const checks = getStoredData('daily_checklist', {});
+      const categories = ['🍱 Comida', '🏊‍♀️ Piscina', '🏋️‍♀️ Gym', '🔑 Imprescindibles'];
+      
+      container.innerHTML = categories.map(cat => {
+        const items = CHECKLIST_ITEMS.filter(i => i.cat === cat);
+        return `
+          <div class="soft-card p-3 bg-white space-y-1.5">
+            <h4 class="text-[11px] font-bold text-slate-700 uppercase tracking-wider pb-1 border-b border-[#EFE8DA] flex items-center justify-between">
+              <span>${cat}</span>
+              <span class="text-[9px] text-slate-400 font-normal">(${items.filter(i => checks[i.id]).length}/${items.length})</span>
+            </h4>
+            <div class="space-y-1">
+              ${items.map(item => {
+                const isChecked = !!checks[item.id];
+                return `
+                  <label class="flex items-center gap-2 text-xs text-slate-700 cursor-pointer p-1 rounded-lg hover:bg-[#FAF7F2]">
+                    <input type="checkbox" onchange="toggleChecklistItem('${item.id}')" ${isChecked ? 'checked' : ''} 
+                           class="custom-check-meal w-3.5 h-3.5 rounded accent-[#52B788] bg-white border-[#D6CDBC] cursor-pointer">
+                    <span class="${isChecked ? 'line-through text-slate-400' : ''}">${item.name}</span>
+                  </label>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function toggleChecklistItem(id) {
+      const checks = getStoredData('daily_checklist', {});
+      checks[id] = !checks[id];
+      setStoredData('daily_checklist', checks);
+      renderChecklist();
+    }
+
+    function resetChecklist() {
+      if (confirm('¿Quieres desmarcar la lista de salida?')) {
+        setStoredData('daily_checklist', {});
+        renderChecklist();
+      }
+    }
+
+    function renderShoppingList() {
+      const renderGroup = (items, elementId) => {
+        const container = document.getElementById(elementId);
+        if (!container) return;
+        const checks = getStoredData('shopping_checks', {});
+        container.innerHTML = items.map(item => {
+          const isChecked = !!checks[item.id];
+          return `
+            <label class="flex items-start gap-2 text-xs p-2 rounded-xl border ${isChecked ? 'border-[#CDEED3] bg-[#EAF8EE]' : 'border-[#EFE8DA] bg-[#FAF7F2]'} cursor-pointer">
+              <input type="checkbox" onchange="toggleShoppingCheck('${item.id}')" ${isChecked ? 'checked' : ''} class="custom-check-meal mt-0.5 w-3.5 h-3.5 rounded accent-[#52B788] bg-white border-[#D6CDBC] cursor-pointer">
+              <div class="flex-1">
+                <span class="font-bold text-slate-800 ${isChecked ? 'line-through text-slate-400' : ''}">${item.name}</span>
+                <span class="block text-[#1E6345] font-semibold text-[10px]">${item.qty}</span>
+              </div>
+            </label>
+          `;
+        }).join('');
+      };
+
+      renderGroup(SHOPPING_DATA.tanda1, 'shop-tanda1');
+      renderGroup(SHOPPING_DATA.tanda2, 'shop-tanda2');
+      renderGroup(SHOPPING_DATA.despensa, 'shop-despensa');
+    }
+
+    function toggleShoppingCheck(id) {
+      const checks = getStoredData('shopping_checks', {});
+      checks[id] = !checks[id];
+      setStoredData('shopping_checks', checks);
+      renderShoppingList();
+    }
+
+    function resetShoppingList() {
+      if (confirm('¿Quieres reiniciar la lista de la compra?')) {
+        setStoredData('shopping_checks', {});
+        renderShoppingList();
+      }
+    }
+
+    // ==================== HEALTH LOG ====================
+    function saveDailyHealthLog() {
+      const weight = document.getElementById('inputWeight').value;
+      const wrist = document.getElementById('inputWristStatus').value;
+      const notes = document.getElementById('inputDayNotes').value;
+
+      const log = { weight, wrist, notes, date: selectedDateKey };
+      setStoredData('health_' + selectedDateKey, log);
+      alert('¡Guardado en tu calendario, Ivet!');
+    }
+
+    function loadHealthLog() {
+      const log = getStoredData('health_' + selectedDateKey, null);
+      if (log) {
+        document.getElementById('inputWeight').value = log.weight || '';
+        document.getElementById('inputWristStatus').value = log.wrist || 'sin_dolor';
+        document.getElementById('inputDayNotes').value = log.notes || '';
+      } else {
+        document.getElementById('inputWeight').value = '';
+        document.getElementById('inputWristStatus').value = 'sin_dolor';
+        document.getElementById('inputDayNotes').value = '';
+      }
+    }
+  </script>
+</body>
+</html>
